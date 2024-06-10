@@ -40,3 +40,32 @@ def assign_points_to_regions(points: np.ndarray, centers: np.ndarray) -> List[Li
         regions[nearest_center].append(i)
 
     return regions
+
+
+def remove_points_from_point_cloud(pcd: o3d.geometry.PointCloud,
+                                   points_to_remove: np.ndarray) -> o3d.geometry.PointCloud:
+    """
+    Remove specified points from an Open3D point cloud.
+
+    :param pcd: Open3D PointCloud object
+    :param points_to_remove: (N, 3) numpy array of points to remove
+    :return: Open3D PointCloud object with specified points removed
+    """
+    # Convert point cloud to numpy array
+    pcd_points = np.asarray(pcd.points)
+
+    # Create a mask for points to remove using broadcasting and advanced indexing
+    mask = np.ones(len(pcd_points), dtype=bool)
+
+    if len(points_to_remove) > 0:
+        # Use numpy broadcasting to create a mask for points to remove
+        remove_mask = np.isin(pcd_points, points_to_remove).all(axis=1)
+        mask = ~remove_mask
+
+    # Get indices of points to keep
+    indices_to_keep = np.where(mask)[0]
+
+    # Select points to keep using select_by_index
+    pcd_filtered = pcd.select_by_index(indices_to_keep)
+
+    return pcd_filtered

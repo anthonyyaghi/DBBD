@@ -1,0 +1,20 @@
+{
+  "encoders": [
+    {"name": "enc1", "class": "SparseResUNet", "args": []},
+    {"name": "enc2", "class": "SparseResUNet", "args": []}
+  ],
+  "aggregators": [
+    {"name": "agg1", "class": "MaxPoolAggregator", "args": []},
+    {"name": "agg2", "class": "MaxPoolAggregator", "args": []}
+  ],
+  "propagators": [
+    {"name": "pro1", "class": "AppendPropagator", "args": []}
+  ],
+  "L2GBranch": [
+    {"encoder": "enc1", "aggregator": "agg1"}
+  ],
+  "G2LBranch": [
+    {"encoder": "enc2", "aggregator": "agg2", "propagator": "pro1"},
+    {"encoder": "enc3", "aggregator": "agg2", "propagator": "pro1"}
+  ]
+}
