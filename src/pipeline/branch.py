@@ -3,11 +3,10 @@ from typing import List
 from torch import nn
 
 
-class L2GBranch:
+class Branch:
     def __init__(self, units: List[nn.Module]):
         self.units = units
 
-
-class G2LBranch:
-    def __init__(self, units: List[nn.Module]):
-        self.units = units
+    @property
+    def num_layers(self):
+        return len(self.units)

@@ -1,4 +1,4 @@
-from src.region_proposal.utils import assign_points_to_regions, open3d_fps
+from region_proposal.utils import assign_points_to_regions, open3d_fps
 import numpy as np
 from typing import List, Dict, Tuple, Any
 
